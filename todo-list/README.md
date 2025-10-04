@@ -1,0 +1,2 @@
+![Screenshot](https://raw.githubusercontent.com/0PePo0/react-lab3/refs/heads/main/photo_2025-09-28_23-15-47.jpg)
+![Screenshot](https://raw.githubusercontent.com/0PePo0/react-lab3/refs/heads/main/photo_2025-09-28_23-17-49.jpg)
