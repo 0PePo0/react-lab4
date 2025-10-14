@@ -24,16 +24,18 @@ export default function useTodos() {
   }, []);
 
   const deleteTodo = async (id) => {
-    setIsLoading(true);
-    try {
+  setIsLoading(true);
+  try {
+    if (id <= 150) {
       await axios.delete(`${API_URL}/${id}`);
-      setTodos((prev) => prev.filter((todo) => todo.id !== id));
-    } catch (err) {
-      setError(err);
-    } finally {
-      setIsLoading(false);
     }
-  };
+    setTodos((prev) => prev.filter((todo) => todo.id !== id));
+  } catch (err) {
+    setError(err);
+  } finally {
+    setIsLoading(false);
+  }
+};
 
 
  const toggleTodo = async (id) => {
