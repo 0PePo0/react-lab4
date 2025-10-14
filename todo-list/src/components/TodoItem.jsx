@@ -1,43 +1,29 @@
 import { useState } from "react";
-import TodoActions from "./TodoActions";
-import Checkbox from "./Checkbox";
 
-export default function TodoItem({ task, onDelete }) {
-  const [checked, setChecked] = useState(false);
+export default function TodoItem({ task, onDelete, onToggle }) {
   const [isEditing, setIsEditing] = useState(false);
-  const [text, setText] = useState(task.text);
+  const [text, setText] = useState(task.todo);
 
-  const handleTextChange = (e) => {
-    setText(e.target.value);
-  };
-
-  const handleSave = () => {
-    setIsEditing(false);
-    console.log("adasd");
-  };
-
-  const handleEdit = () => {
-    setIsEditing(true);
-    console.log("12312");
-  };
+  const handleSave = () => setIsEditing(false);
 
   return (
     <li
       style={{
         ...styles.item,
-        backgroundColor: checked ? "#b9b9b9ff" : "#fffdfdff",
+        backgroundColor: task.completed ? "#ddd" : "#fff",
+        textDecoration: task.completed ? "line-through" : "none",
       }}
     >
-      <Checkbox
-        checked={checked}
-        onChange={(newChecked) => setChecked(newChecked)}
+      <input
+        type="checkbox"
+        checked={task.completed}
+        onChange={() => onToggle(task.id)}
       />
 
       {isEditing ? (
         <input
-          type="text"
           value={text}
-          onChange={handleTextChange}
+          onChange={(e) => setText(e.target.value)}
           onKeyDown={(e) => e.key === "Enter" && handleSave()}
           autoFocus
         />
@@ -45,12 +31,14 @@ export default function TodoItem({ task, onDelete }) {
         <span>{text}</span>
       )}
 
-      <TodoActions
-        isEditing={isEditing}
-        onChangeClick={() => handleEdit()}
-        onSaveClick={() => handleSave()}
-        onDeleteClick={() => onDelete(task.id)}
-      />
+      <div>
+        {isEditing ? (
+          <button onClick={handleSave}>Save</button>
+        ) : (
+          <button onClick={() => setIsEditing(true)}>Edit</button>
+        )}
+        <button onClick={() => onDelete(task.id)}>Delete</button>
+      </div>
     </li>
   );
 }
@@ -58,12 +46,12 @@ export default function TodoItem({ task, onDelete }) {
 const styles = {
   item: {
     display: "flex",
-    justifyContent: "space-between",
     alignItems: "center",
+    justifyContent: "space-between",
+    gap: "10px",
     padding: "8px",
-    border: "1px solid #ddd",
+    border: "1px solid #ccc",
     borderRadius: "5px",
-    marginBottom: "5px",
-    gap: "8px",
+    marginBottom: "6px",
   },
 };

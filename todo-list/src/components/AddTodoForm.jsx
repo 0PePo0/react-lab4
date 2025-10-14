@@ -30,27 +30,21 @@ export default function AddTodoForm({ onAddTodo }) {
 const styles = {
   container: {
     display: "flex",
-    alignItems: "center",
-    gap: "10px",        // відстань між input і кнопкою
-    justifyContent: "center", // по центру екрана
-    marginTop: "20px",
+    gap: "10px",
+    marginBottom: "15px",
   },
   input: {
-    width: "100px",    // 👈 зробив вужче
-    height: "30px",
-    padding: "0 10px",
+    flex: 1,
+    padding: "8px",
+    borderRadius: "6px",
     border: "1px solid #ccc",
-    borderRadius: "4px",
-    fontSize: "16px",
   },
   button: {
-    backgroundColor: "#7ea17f",
+    backgroundColor: "#007bff",
+    color: "white",
     border: "none",
-    outline: "none",
+    borderRadius: "6px",
+    padding: "8px 14px",
     cursor: "pointer",
-    height: "30px",
-    padding: "0 20px",
-    borderRadius: "4px",
-    fontSize: "16px",
   },
 };
