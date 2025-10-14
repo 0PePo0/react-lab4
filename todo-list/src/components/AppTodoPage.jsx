@@ -7,12 +7,12 @@ export default function AppTodoPage() {
 
   return (
     <div style={styles.container}>
-      <h1 style={{ textAlign: "center" }}>Список завдань</h1>
+      <h1 style={{ textAlign: "center" }}>Todo List</h1>
 
       <AddTodoForm onAddTodo={addTodo} />
 
       {isLoading && <p>Завантаження...</p>}
-      {error && <p style={{ color: "red" }}>Помилка: {error.message}</p>}
+      {error && <p style={{ color: "red" }}>error: {error.message}</p>}
 
       <TodoList tasks={todos} onDelete={deleteTodo} onToggle={toggleTodo} />
     </div>
