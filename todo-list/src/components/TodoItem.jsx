@@ -1,10 +1,15 @@
 import { useState } from "react";
+import Checkbox from "./Checkbox";
+import Button from "./Button";
 
 export default function TodoItem({ task, onDelete, onToggle }) {
   const [isEditing, setIsEditing] = useState(false);
   const [text, setText] = useState(task.todo);
 
-  const handleSave = () => setIsEditing(false);
+  const handleSave = () => {
+    setIsEditing(false);
+    // Можна додати збереження змін тут, якщо потрібно
+  };
 
   return (
     <li
@@ -14,8 +19,7 @@ export default function TodoItem({ task, onDelete, onToggle }) {
         textDecoration: task.completed ? "line-through" : "none",
       }}
     >
-      <input
-        type="checkbox"
+      <Checkbox
         checked={task.completed}
         onChange={() => onToggle(task.id)}
       />
@@ -31,13 +35,28 @@ export default function TodoItem({ task, onDelete, onToggle }) {
         <span>{text}</span>
       )}
 
-      <div>
+      <div style={styles.actions}>
         {isEditing ? (
-          <button onClick={handleSave}>Save</button>
+          <Button
+            style={{ ...styles.button, backgroundColor: "#7ea17fff" }}
+            onClick={handleSave}
+          >
+            Save
+          </Button>
         ) : (
-          <button onClick={() => setIsEditing(true)}>Edit</button>
+          <Button
+            style={{ ...styles.button, backgroundColor: "#a3a3a3ff" }}
+            onClick={() => setIsEditing(true)}
+          >
+            Edit
+          </Button>
         )}
-        <button onClick={() => onDelete(task.id)}>Delete</button>
+        <Button
+          style={{ ...styles.button, backgroundColor: "#c79d9dff" }}
+          onClick={() => onDelete(task.id)}
+        >
+          Delete
+        </Button>
       </div>
     </li>
   );
@@ -53,5 +72,16 @@ const styles = {
     border: "1px solid #ccc",
     borderRadius: "5px",
     marginBottom: "6px",
+  },
+  actions: {
+    display: "flex",
+    gap: "5px",
+  },
+  button: {
+    border: "none",
+    color: "white",
+    padding: "5px 10px",
+    borderRadius: "3px",
+    cursor: "pointer",
   },
 };
