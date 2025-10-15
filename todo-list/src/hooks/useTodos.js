@@ -4,24 +4,21 @@ import axios from "axios";
 const API_URL = "https://dummyjson.com/todos";
 
 export default function useTodos(initialLimit = 10) {
-  const [allTodos, setAllTodos] = useState([]); // ВСІ тудушки для пошуку
-  const [todos, setTodos] = useState([]);       // поточна сторінка
+  const [allTodos, setAllTodos] = useState([]);
+  const [todos, setTodos] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  // Pagination
   const [currentPage, setCurrentPage] = useState(1);
   const [limitPerPage, setLimitPerPage] = useState(initialLimit);
   const [totalTodos, setTotalTodos] = useState(0);
 
-  // Search
   const [searchTerm, setSearchTerm] = useState("");
 
-  // Завантажуємо ВСІ тудушки один раз
   const fetchAllTodos = async () => {
     setIsLoading(true);
     try {
-      const response = await axios.get(`${API_URL}?limit=150`); // максимальна кількість
+      const response = await axios.get(`${API_URL}?limit=150`);
       setAllTodos(response.data.todos);
       setTotalTodos(response.data.total);
     } catch (err) {
@@ -35,18 +32,15 @@ export default function useTodos(initialLimit = 10) {
     fetchAllTodos();
   }, []);
 
-  // Оновлюємо поточну сторінку при зміні currentPage або searchTerm
   useEffect(() => {
     let data = allTodos;
 
-    // Якщо є пошуковий термін — фільтруємо
     if (searchTerm.trim() !== "") {
       data = data.filter(todo =>
         todo.todo.toLowerCase().includes(searchTerm.toLowerCase())
       );
     }
 
-    // Пагінація
     const start = (currentPage - 1) * limitPerPage;
     const end = start + limitPerPage;
     setTodos(data.slice(start, end));
@@ -54,7 +48,6 @@ export default function useTodos(initialLimit = 10) {
     setTotalTodos(data.length);
   }, [allTodos, currentPage, limitPerPage, searchTerm]);
 
-  // Pagination functions
   const goToNextPage = () => {
     if (currentPage * limitPerPage < totalTodos) setCurrentPage(prev => prev + 1);
   };
@@ -68,7 +61,6 @@ export default function useTodos(initialLimit = 10) {
     setCurrentPage(1);
   };
 
-  // CRUD
   const addTodo = (text) => {
     const newTodo = { id: Date.now(), todo: text, completed: false, userId: 1 };
     setAllTodos(prev => [newTodo, ...prev]);

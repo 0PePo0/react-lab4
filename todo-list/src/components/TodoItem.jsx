@@ -8,7 +8,7 @@ export default function TodoItem({ task, onDelete, onToggle }) {
 
   const handleSave = () => {
     setIsEditing(false);
-    // Можна додати збереження змін тут, якщо потрібно
+
   };
 
   return (
